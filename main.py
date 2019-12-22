@@ -47,8 +47,8 @@ def map_choice(G):
         nodes=list(map(int,input("Choose a set of nodes (just enter the nodes id with spaces between them) ").split()))
         measure=input("Choose a distance type " )
         path = functionality2.find_smartest_path(nodes, measure, network, distances, time, coordinates, weighted_network)
-        draw_graph(path,G, coordinates, df)
-        gmaps(coordinates, path)
+        functionality2.draw_graph(path,G, coordinates, df)
+        functionality2.gmaps(coordinates, path)
         res=IFrame('mapCC.html', width=700, height=600)
         res
         
@@ -64,18 +64,22 @@ def map_choice(G):
         res
 
     elif enter == '4':
-        print("Choose a node " , end = "")
-        param1=input()
-        print("Choose a set of nodes (just enter the nodes id with spaces between them) " , end = "")
-        param2=map(int,input().split())
-        print("Choose a distance type " , end = "")
-        param3=input()
-        #return funct1(int(param1),set(param2),str(param3))
+        coordinates, df= functionality3.get_coordinates()
+        nodes=list(map(int,input("Choose a set of nodes (just enter the nodes id with spaces between them) ").split()))
+        measure=input("Choose a distance type " )
+        path = functionality4.shorthest_unordered_path(nodes, measure)
+        functionality4.draw_graph(path,G, coordinates, df)
+        functionality4.gmaps(coordinates, path)
+        res=IFrame('mapTT.html', width=700, height=600)
+        res
+
     elif enter == 'esc':
         return
     else:
         print("Please, enter again one of those: '1', '2', '3','4' or 'esc'.", '\n')
         return map_choice()
+
+
 
 
 G = functionality2.get_graph()
