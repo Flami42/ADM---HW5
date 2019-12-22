@@ -100,7 +100,7 @@ def djikstra(g, begining, destination):
         graph_route = [follow_node[point]] + graph_route
         point = follow_node [point]
     final_dest= add_distance[destination]
-    return graph_route, final_dest
+    return graph_route, final_dest #retuns optimal route between two nodes and add them as final_dest
 
 
 def find_shortest_path(sequence_of_nodes, distances_function ):
@@ -112,52 +112,52 @@ def find_shortest_path(sequence_of_nodes, distances_function ):
 
 
     columnsName=['first', 'second', distances_function + '(first,second)']
-    if distances_function == "travel_distance":
+    if distances_function == "travel_distance": #if distances_function is distance read distance file and create a data frame 
         with open("USA-road-d.CAL.gr", 'r') as f:
             reader = f.readlines()
             reader = reader[7:]
             NodeDataFrame = pd.DataFrame([map(int, i.strip('\n').strip("a ").split()) for i in reader], columns=columnsName)
 
 
-    elif distances_function == "travel_time":
+    elif distances_function == "travel_time": #if distances_function is time read time file and create a data frame 
         with open("USA-road-t.CAL.gr", 'r') as f:
             reader = f.readlines()
             reader = reader[7:]
             NodeDataFrame = pd.DataFrame([map(int, i.strip('\n').strip("a ").split()) for i in reader], columns=columnsName)
 
-    elif distances_function == "network_distance ": # Here we get the data we need 
+    elif distances_function == "network_distance ": # Here we get the data we need for creating network_distance from travel distance data
         with open("USA-road-d.CAL.co", 'r') as f:
             reader = f.readlines()
             reader = reader[7:]
             NodeDataFrame = pd.DataFrame([map(int, i.strip('\n').strip("a ").split()) for i in reader], columns=columnsName)
 
 
-    if distances_function == "travel_distance" or distances_function == "travel_time":
+    if distances_function == "travel_distance" or distances_function == "travel_time": #if distances_function is time or distance create a dictinoary from our dataframes
         nodesDic = defaultdict(list)
         for index in NodeDataFrame.index:
             nodesDic[NodeDataFrame["first"].iloc[index]].append((NodeDataFrame["second"].iloc[index], NodeDataFrame[distances_function +"(first,second)"].iloc[index]))
 
-        #for key, value in nodesDic.items():
-        #    list_temp=[]
-        #    for i in range(len(value)):
-        #        list_temp.append(value[i][0])
-        #    network[key]=list_temp
-        #out = dict(itertools.islice(nodesDic.items(), 3)) 
+        for key, value in nodesDic.items():
+            list_temp=[]
+            for i in range(len(value)):
+                list_temp.append(value[i][0])
+            network[key]=list_temp
+        out = dict(itertools.islice(nodesDic.items(), 3)) 
 
-    elif distances_function == "network_distance" :
+    elif distances_function == "network_distance" :  #if distances_function is network create a dictinoary from our dataframes with all costs are 1
         nodesDic = defaultdict(list)
         for index in NodeDataFrame.index:
             nodesDic[NodeDataFrame["first"].iloc[index]].append((NodeDataFrame["second"].iloc[index], 1))
-        #for key, value in nodesDic.items():
-        #    list_temp=[]
-        #    for i in range(len(value)):
-        #        list_temp.append(value[i][0])
-        #    network[key]=list_temp
+        for key, value in nodesDic.items():
+            list_temp=[]
+            for i in range(len(value)):
+                list_temp.append(value[i][0])
+            network[key]=list_temp
 
     network= get_network()
-    connection = has_Path(sequence_of_nodes,network) #check if there is path
-    #if there is a path we compute the djikstra algorithm to ge the shortest path from a node to the next one
-    if connection == True:
+    connection = has_Path(sequence_of_nodes,network) #we can see that is there connection or not 
+   
+    if connection == True: #if there is conn. use djikstra
         for i in range(len(sequence_of_nodes)-1):
             route, cost = djikstra(nodesDic, sequence_of_nodes[i], sequence_of_nodes[i+1]) 
             routeListForVisual.append(route)
@@ -165,7 +165,7 @@ def find_shortest_path(sequence_of_nodes, distances_function ):
     else:
         print("Not possible")
 
-    print(routeList)
+    print(routeList) #recive optimal route map list
 
 
     #Since it's not in the right structure (the path we have) we put it into something that is ready to be Visualized
@@ -174,7 +174,7 @@ def find_shortest_path(sequence_of_nodes, distances_function ):
             totalRouteForVisual.append(routeListForVisual[i][j])
         totalRouteForVisual.remove(routeListForVisual[i][-1])
     totalRouteForVisual.append(routeListForVisual[-1][-1])
-    return totalRouteForVisual
+    return totalRouteForVisual #merge optimal route map list
 
 
 
