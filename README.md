@@ -1,7 +1,7 @@
 # Algorithmic Methods for Data Mining - Homework 5
 Repository for ADM - HW5
 
-Made by Group #6, also known as: *Dilara Isikli* , *Mechket Ben Messaoud* & *Flaminia Spasiano*.
+Made by Group #6, also known as: *Dilara Isikli* , *Flaminia Spasiano* & *Mechket Ben Messaoud*.
 ![Alt Text](https://1igc0ojossa412h1e3ek8d1w-wpengine.netdna-ssl.com/wp-content/uploads/2018/03/9780921338390.jpg)
 
 **Goal of the homework**
@@ -13,11 +13,10 @@ In this homework, we built a system that provides users with information about r
 
  
  The repository contais:
- * ```functionality1.py```: A module that implements function for *Functionality 1- Find the Neighbours!*
- * ```functionality2.py```: A module that implements function for *Functionality 2- Find the martest Network!*
- * ```functionality3.py```: A module that implements function for *Functionality 3 - Shortest Ordered Route!*
+ * ```functionality1.py```: A module that implements functions for *Functionality 1- Find the Neighbours!*
+ * ```functionality2.py```: A module that implements functions for *Functionality 2- Find the martest Network!*
+ * ```functionality3.py```: A module that implements functions for *Functionality 3 - Shortest Ordered Route!*
+ * ```functionality4.py```: A module that implements functions for *Functionality 4 - Shortest Route!*
  * ```main.py```: a Python script which executes the whole system. It ask some inputs and provide the right outputs.
- * ```functionality1+visualization1.ipynb```: A Notebook for a direct visualuzation of how Functionality 1  works and its visualization
-  * ```functionality2+visualization2.ipynb```: A Notebook for a direct visualuzation of how Functionality 2  works and its visualization
-  * ```functionality3+visualization3.ipynb```: A Notebook for a direct visualuzation of how Functionality 3  works and its visualization
+ * ```Notebooks```: A folter that containts notebook for a direct visualuzation of how Functionalities work and their visualization
   * ```Figures```: A folder that contains some figures form the notebooks (those are html figures, connected to GoogleMaps or OpenStreeView)
