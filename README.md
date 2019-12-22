@@ -19,3 +19,5 @@ In this homework, we built a system that provides users with information about r
  * ```main.py```: a Python script which executes the whole system. It ask some inputs and provide the right outputs.
  * ```functionality1+visualization1.ipynb```: A Notebook for a direct visualuzation of how Functionality 1  works and its visualization
   * ```functionality2+visualization2.ipynb```: A Notebook for a direct visualuzation of how Functionality 2  works and its visualization
+  * ```functionality3+visualization3.ipynb```: A Notebook for a direct visualuzation of how Functionality 3  works and its visualization
+  * ```Figures```: A folder that contains some figures form the notebooks (those are html figures, connected to GoogleMaps or OpenStreeView)
