@@ -9,3 +9,4 @@ Made by Group #6, also known as: *Dilara Isikli* , *Mechket Ben Messaoud* & *Fla
  * ```functionality1.py```: A module that implements function for *Functionality 1- Find the Neighbours!*
  * ```functionality2.py```: A module that implements function for *Functionality 2- Find the martest Network!*
  * ```functionality3.py```: A module that implements function for *Functionality 3 - Shortest Ordered Route!*
+ * ```main.py```: a Python script which executes the whole system. It ask some inputs and provide the right outputs.
