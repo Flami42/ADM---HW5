@@ -125,7 +125,7 @@ def find_shortest_path(sequence_of_nodes, distances_function ):
             reader = reader[7:]
             NodeDataFrame = pd.DataFrame([map(int, i.strip('\n').strip("a ").split()) for i in reader], columns=columnsName)
 
-    elif distances_function == "network_distance ":
+    elif distances_function == "network_distance ": # Here we get the data we need 
         with open("USA-road-d.CAL.co", 'r') as f:
             reader = f.readlines()
             reader = reader[7:]
@@ -155,7 +155,8 @@ def find_shortest_path(sequence_of_nodes, distances_function ):
         #    network[key]=list_temp
 
     network= get_network()
-    connection = has_Path(sequence_of_nodes,network)
+    connection = has_Path(sequence_of_nodes,network) #check if there is path
+    #if there is a path we compute the djikstra algorithm to ge the shortest path from a node to the next one
     if connection == True:
         for i in range(len(sequence_of_nodes)-1):
             route, cost = djikstra(nodesDic, sequence_of_nodes[i], sequence_of_nodes[i+1]) 
@@ -167,7 +168,7 @@ def find_shortest_path(sequence_of_nodes, distances_function ):
     print(routeList)
 
 
-#Start to Visualize the Shortest Ordered Route
+    #Since it's not in the right structure (the path we have) we put it into something that is ready to be Visualized
     for i in range(len(routeListForVisual)):
         for j in range(len(routeListForVisual[i])):
             totalRouteForVisual.append(routeListForVisual[i][j])
