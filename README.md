@@ -17,3 +17,4 @@ In this homework, we built a system that provides users with information about r
  * ```functionality2.py```: A module that implements function for *Functionality 2- Find the martest Network!*
  * ```functionality3.py```: A module that implements function for *Functionality 3 - Shortest Ordered Route!*
  * ```main.py```: a Python script which executes the whole system. It ask some inputs and provide the right outputs.
+ * ```functionality1+visualization1.ipynb```: A Notebook for a direct visualuzation of how Functionality 1  works and its visualization
