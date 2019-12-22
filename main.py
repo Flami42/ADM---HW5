@@ -16,31 +16,11 @@ from sklearn.manifold import TSNE
 import itertools
 import functionality1
 import functionality2
+import functionality3
+
 import importlib
 importlib.reload(functionality1)
 
-def get_graph():
-    G = nx.Graph()
-    with open('USA-road-d.CAL.gr', 'r') as f:
-        for line in f:
-            if line[0] == 'a':
-                n1, n2, d= list(map(int, line[2::].split()))
-                G.add_edge(n1, n2, distance= d, weight= 1)
-
-    with open('USA-road-t.CAL.gr', 'r') as f:
-        for line in f:
-            if line[0] == 'a':
-                n1, n2, t= list(map(int, line[2::].split()))
-                G[n1][n2]['time_distance'] = t
-
-    with open('USA-road-d.CAL.co', 'r') as f:
-        for line in f:
-            if line[0] == 'v':
-                n, lat, long = list(map(int, line[2::].split()))
-                G.nodes[n]['latitude']= lat
-                G.nodes[n]['longitude']= long
-                G.nodes[n]['coordinates']= (lat, long)
-    return G
 
 def map_choice(G):
     print("Choose the functionality. Enter: \n -'1' to find the neighbors! \n -'2' to find the smartest network!, \n -'3' to find the shortest ordered route!, \n -'4' to find the shortest route! \n Enter 'esc' to exit", end = "")
@@ -69,16 +49,20 @@ def map_choice(G):
         path = functionality2.find_smartest_path(nodes, measure, network, distances, time, coordinates, weighted_network)
         draw_graph(path,G, coordinates, df)
         gmaps(coordinates, path)
+        res=IFrame('mapCC.html', width=700, height=600)
+        res
         
         
     elif enter == '3':
-        print("Choose a node " , end = "")
-        param1=input()
-        print("Choose a sequence of nodes (just enter the nodes id with spaces between them) " , end = "")
-        param2=map(int,input().split())
-        print("Choose a distance type " , end = "")
-        param3=input()
-        #return funct3(int(param1),list(param2),str(param3))
+        coordinates, df= functionality3.get_coordinates()
+        nodes=list(map(int,input("Choose a set of nodes (just enter the nodes id with spaces between them) ").split()))
+        measure=input("Choose a distance type " )
+        path = functionality3.find_shortest_path(nodes, measure)
+        functionality3.draw_graph(path,G, coordinates, df)
+        functionality3.gmaps(coordinates, path)
+        res=IFrame('mapTT.html', width=700, height=600)
+        res
+
     elif enter == '4':
         print("Choose a node " , end = "")
         param1=input()
@@ -93,5 +77,6 @@ def map_choice(G):
         print("Please, enter again one of those: '1', '2', '3','4' or 'esc'.", '\n')
         return map_choice()
 
-G = get_graph()
+
+G = functionality2.get_graph()
 map_choice(G)
