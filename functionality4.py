@@ -83,8 +83,9 @@ def has_Path(nodes, network):
         else:
             return False
     return True
+#-------------------------------------- SHORTEST PATH --------------------------------------------
+# this function try to find the shortest path for begining and destination nodes
 
-""" Implementation of Djikstra algorithm to find the shortest path between two nodes"""
 def djikstra(g, begining, destination):
     
     add_distance = {}
@@ -112,37 +113,37 @@ def djikstra(g, begining, destination):
         graph_route = [follow_node[point]] + graph_route
         point = follow_node [point]
     final_dest= add_distance[destination]
-    return graph_route, final_dest
+    return graph_route, final_dest  #retuns optimal route between two nodes and add them as final_dest
 
 
 
 def shorthest_unordered_path(sequence_of_nodes, distances_function):
-    start_node= sequence_of_nodes[0]
-    totalRouteForVisual= []
+    start_node= sequence_of_nodes[0] #start point from nodes list
+    totalRouteForVisual= []  #this list has all route for using on visual. function 
     routeListForVisual=[]
 
     columnsName=['first', 'second', distances_function + '(first,second)']
-    if distances_function == "travel_distance":
+    if distances_function == "travel_distance": #if distances_function is distance read distance file and create a data frame 
         with open("USA-road-d.CAL.gr", 'r') as f:
             reader = f.readlines()
             reader = reader[7:]
             NodeDataFrame = pd.DataFrame([map(int, i.strip('\n').strip("a ").split()) for i in reader], columns=columnsName)
 
 
-    elif distances_function == "travel_time":
+    elif distances_function == "travel_time":  #if distances_function is time read time file and create a data frame 
         with open("USA-road-t.CAL.gr", 'r') as f:
             reader = f.readlines()
             reader = reader[7:]
             NodeDataFrame = pd.DataFrame([map(int, i.strip('\n').strip("a ").split()) for i in reader], columns=columnsName)
 
-    elif distances_function == "network_distance ":
+    elif distances_function == "network_distance ": # Here we get the data we need for creating network_distance from travel distance data
         with open("USA-road-d.CAL.co", 'r') as f:
             reader = f.readlines()
             reader = reader[7:]
             NodeDataFrame = pd.DataFrame([map(int, i.strip('\n').strip("a ").split()) for i in reader], columns=columnsName)
 
 
-    if distances_function == "travel_distance" or distances_function == "travel_time":
+    if distances_function == "travel_distance" or distances_function == "travel_time": #if distances_function is time or distance create a dictinoary from our dataframes
         nodesDic = defaultdict(list)
         for index in NodeDataFrame.index:
             nodesDic[NodeDataFrame["first"].iloc[index]].append((NodeDataFrame["second"].iloc[index], NodeDataFrame[distances_function +"(first,second)"].iloc[index]))
@@ -154,7 +155,7 @@ def shorthest_unordered_path(sequence_of_nodes, distances_function):
             network[key]=list_temp
 
 
-    elif distances_function == "network_distance" :
+    elif distances_function == "network_distance" :  #if distances_function is network create a dictinoary from our dataframes with all costs are 1
         nodesDic = defaultdict(list)
         for index in NodeDataFrame.index:
             nodesDic[NodeDataFrame["first"].iloc[index]].append((NodeDataFrame["second"].iloc[index], 1))
@@ -165,8 +166,8 @@ def shorthest_unordered_path(sequence_of_nodes, distances_function):
             network[key]=list_temp
 
     totalmatrix= []
-    connection=True
-    #connection = has_Path(sequence_of_nodes,network)
+    #create a matrix with elements which are optimal distance between each nodes
+    connection = has_Path(sequence_of_nodes,network) #if there is conn. use djikstra
     if connection == True:
         for j in range(len(sequence_of_nodes)):
             routeList=[]
@@ -174,25 +175,26 @@ def shorthest_unordered_path(sequence_of_nodes, distances_function):
 
                 route, cost = djikstra(nodesDic, sequence_of_nodes[j], sequence_of_nodes[i]) 
                 routeList.append(cost)
-            totalmatrix.append(routeList)
+            totalmatrix.append(routeList) 
     else:
         print("Not possible")
 
-    visitedNodeList=[0]
-    compareList= []
+    visitedNodeList=[0] #take visited node to avoid go again 
+    compareList= [] 
     sortedList= []
-    
-    minnode = findmin(totalmatrix[0])
+    #find min and update minNode
+    minnode = findmin(totalmatrix[0]) 
     for i in range(1,len(totalmatrix)-2):
         newMin = findmin(totalmatrix[minnode])
         minnode= newMin
-
+    #compare index list for find index of last node
     for i in range(len(totalmatrix)):
         compareList.append(i)
     for i in compareList:
         if i not in visitedNodeList:
             visitedNodeList.append(i)
-    for i in range(len(sequence_of_nodes)):
+#match index and actual nodes and create a new list for ORDERED NODE LIST    
+for i in range(len(sequence_of_nodes)):
         if visitedNodeList[i] == sequence_of_nodes.index(sequence_of_nodes[i]):
             sortedList.append(sequence_of_nodes[i])
 
@@ -202,15 +204,15 @@ def shorthest_unordered_path(sequence_of_nodes, distances_function):
         routeListForVisual.append(route)
         routeList.append((route, cost))
 
-    print(routeList)
-
+    print(routeList) #recive optimal route map list
+    #Since it's not in the right structure (the path we have) we put it into something that is ready to be Visualized
     #Start to Visualize the Shortest Ordered Route
     for i in range(len(routeListForVisual)):
         for j in range(len(routeListForVisual[i])):
             totalRouteForVisual.append(routeListForVisual[i][j])
         totalRouteForVisual.remove(routeListForVisual[i][-1])
     totalRouteForVisual.append(routeListForVisual[-1][-1])
-    return totalRouteForVisual
+    return totalRouteForVisual  #merge optimal route map list
 
 
 
